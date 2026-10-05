@@ -1,0 +1,3294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Nuestro aniversario</title>
+
+
+    <style>
+
+        /* =====================================================
+           BASE
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+
+            width: 100%;
+            height: 100%;
+
+            margin: 0;
+            padding: 0;
+
+            overflow: hidden;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            background: #faf3df;
+        }
+
+        body {
+            position: relative;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+
+        /* =====================================================
+           ESCENA 1
+        ===================================================== */
+
+        .scene-one {
+
+            position: fixed;
+            inset: 0;
+
+            z-index: 10;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #faf3df;
+
+            transition:
+                opacity .8s ease,
+                transform .8s ease;
+        }
+
+        .scene-one.hidden {
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform: scale(1.04);
+        }
+
+
+        /* =====================================================
+           IPHONE
+        ===================================================== */
+
+        .phone {
+
+            position: relative;
+
+            width: min(390px, 88vw);
+            height: min(780px, 88vh);
+
+            border-radius: 45px;
+
+            overflow: hidden;
+
+            background: #111;
+
+            box-shadow:
+                0 30px 70px
+                rgba(60,45,20,.28);
+
+            border: 7px solid #111;
+        }
+
+
+        .lockscreen {
+
+            position: absolute;
+
+            inset: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: flex-start;
+
+            padding-top: 105px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(0,0,0,.15),
+                    rgba(0,0,0,.2)
+                ),
+                url("foto.jpg");
+
+            background-size: cover;
+
+            background-position: center 40%;
+        }
+
+
+        .lock-date {
+
+            margin: 0 0 5px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 18px;
+
+            font-weight: 500;
+
+            text-shadow:
+                0 2px 5px
+                rgba(0,0,0,.4);
+        }
+
+
+        .lock-time {
+
+            margin: 0;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size:
+                clamp(62px, 17vw, 86px);
+
+            line-height: .95;
+
+            font-weight: 300;
+
+            letter-spacing: -4px;
+
+            text-shadow:
+                0 3px 10px
+                rgba(0,0,0,.35);
+        }
+
+
+        .code-text {
+
+            margin-top: 38px;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 16px;
+
+            color: rgba(255,255,255,.92);
+
+            text-shadow:
+                0 2px 5px
+                rgba(0,0,0,.4);
+        }
+
+
+        .code-dots {
+
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 18px;
+        }
+
+
+        .code-dot {
+
+            width: 11px;
+            height: 11px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(255,255,255,.9);
+
+            background:
+                rgba(255,255,255,.15);
+
+            transition:
+                background .2s ease,
+                transform .2s ease;
+        }
+
+
+        .code-dot.active {
+
+            background: white;
+
+            transform: scale(1.1);
+        }
+
+
+        .code-error {
+
+            position: absolute;
+
+            bottom: 90px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            width: 90%;
+
+            text-align: center;
+
+            color: white;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 14px;
+
+            opacity: 0;
+
+            transition:
+                opacity .3s ease;
+        }
+
+
+        .code-error.show {
+            opacity: 1;
+        }
+
+
+        .number-pad {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 45px;
+
+            transform:
+                translateX(-50%);
+
+            width: 225px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 13px;
+        }
+
+
+        .number-button {
+
+            width: 63px;
+            height: 63px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.23);
+
+            color: white;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size: 25px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                transform .12s ease,
+                background .12s ease;
+        }
+
+
+        .number-button:active {
+
+            transform: scale(.92);
+
+            background:
+                rgba(255,255,255,.4);
+        }
+
+
+        .number-button.empty {
+            visibility: hidden;
+        }
+
+
+        /* =====================================================
+           ESCENA 2
+        ===================================================== */
+
+        .scene-two {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 5;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 50% 30%,
+                    #fffef7 0%,
+                    #faf3df 42%,
+                    #eee3c4 75%,
+                    #e1d3af 100%
+                );
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition:
+                opacity .9s ease;
+        }
+
+
+        body.unlocked .scene-one {
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        body.unlocked .scene-two {
+
+            opacity: 1;
+
+            pointer-events: auto;
+        }
+
+
+        /* =====================================================
+           GIRASOL ESCENA 2
+        ===================================================== */
+
+        .sunflower-split {
+
+            width:
+                min(720px, 90vw);
+
+            aspect-ratio: 1 / 1;
+
+            margin-top: -25px;
+
+            display: flex;
+
+            overflow: hidden;
+        }
+
+
+        .sun-half {
+
+            position: relative;
+
+            width: 50%;
+            height: 100%;
+
+            overflow: hidden;
+
+            transition:
+                transform 1.5s
+                cubic-bezier(.65,0,.35,1);
+        }
+
+
+        .sun-half img {
+
+            position: absolute;
+
+            top: 0;
+
+            width: 200%;
+            height: 100%;
+
+            object-fit: contain;
+        }
+
+
+        .sun-left img {
+            left: 0;
+        }
+
+
+        .sun-right img {
+            right: 0;
+        }
+
+
+        .sun-left {
+
+            transform:
+                translateX(-100vw);
+        }
+
+
+        .sun-right {
+
+            transform:
+                translateX(100vw);
+        }
+
+
+        body.unlocked
+        .sun-left,
+        body.unlocked
+        .sun-right {
+
+            transform:
+                translateX(0);
+        }
+
+
+        /* =====================================================
+           CONTADOR
+        ===================================================== */
+
+        .love-counter {
+
+            margin-top: -120px;
+
+            display: flex;
+
+            justify-content: center;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        .counter-box {
+
+            min-width: 185px;
+
+            padding:
+                12px 22px 14px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,.58);
+
+            border:
+                1px solid
+                rgba(255,255,255,.7);
+
+            box-shadow:
+                0 10px 30px
+                rgba(100,80,40,.10);
+
+            text-align: center;
+
+            backdrop-filter: blur(8px);
+        }
+
+
+        .counter-number {
+
+            display: block;
+
+            color: #5f5139;
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            font-size:
+                clamp(34px, 9vw, 52px);
+
+            line-height: 1;
+
+            font-weight: 600;
+        }
+
+
+        .counter-label {
+
+            display: block;
+
+            margin-top: 5px;
+
+            color: #6b5a3d;
+
+            font-size:
+                clamp(15px, 4vw, 19px);
+
+            font-weight: 600;
+        }
+
+
+        .counter-date {
+
+            display: block;
+
+            margin-top: 4px;
+
+            color: #8a795c;
+
+            font-size:
+                clamp(12px, 3vw, 15px);
+        }
+
+
+        /* =====================================================
+           BOTÓN SIGUIENTE
+        ===================================================== */
+
+        .next-button {
+
+            position: absolute;
+
+            right: 28px;
+            bottom: 28px;
+
+            width: 52px;
+            height: 52px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.55);
+
+            color: #6b5a3d;
+
+            font-size: 28px;
+
+            font-weight: 300;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px 18px
+                rgba(100,80,40,.12);
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+
+        .next-button:hover {
+
+            transform:
+                translateX(3px);
+
+            background:
+                rgba(255,255,255,.8);
+        }
+
+
+        /* =====================================================
+           ESCENA 3
+        ===================================================== */
+
+        .scene-three {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 20;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            padding: 30px;
+
+            background: #f3d77a;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform:
+                translateX(30px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+
+        body.scene-three-active
+        .scene-three {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+            transform:
+                translateX(0);
+        }
+
+
+        .scene-three-title {
+
+            position: relative;
+
+            z-index: 5;
+
+            margin:
+                0 0 55px;
+
+            color: #5f5139;
+
+            font-size:
+                clamp(34px, 8vw, 52px);
+
+            font-weight: 600;
+
+            text-align: center;
+        }
+
+
+        .scene-three-options {
+
+            position: relative;
+
+            z-index: 5;
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 25px;
+
+            width:
+                min(470px, 88vw);
+        }
+
+
+        .option-box {
+
+            min-height: 105px;
+
+            padding: 20px 30px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,.78);
+
+            color: #5f5139;
+
+            font-size:
+                clamp(22px, 5vw, 28px);
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 15px 35px
+                rgba(100,75,20,.15);
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+
+        .option-box:hover {
+
+            transform:
+                translateY(-5px);
+
+            background:
+                rgba(255,255,255,.95);
+
+            box-shadow:
+                0 20px 40px
+                rgba(100,75,20,.2);
+        }
+
+
+        /* =====================================================
+           GIRASOLES CAYENDO
+        ===================================================== */
+
+        .falling-sunflowers {
+
+            position: absolute;
+
+            inset: 0;
+
+            overflow: hidden;
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+
+        .falling-sunflower {
+
+            position: absolute;
+
+            top: -80px;
+
+            width: 42px;
+            height: 42px;
+
+            object-fit: contain;
+
+            opacity: .72;
+
+            animation:
+                sunflowerFall
+                linear
+                infinite;
+
+            will-change:
+                transform;
+        }
+
+
+        .flower-1 {
+            left: 7%;
+            width: 34px;
+            height: 34px;
+            animation-duration: 8s;
+            animation-delay: -2s;
+        }
+
+
+        .flower-2 {
+            left: 19%;
+            width: 48px;
+            height: 48px;
+            animation-duration: 10s;
+            animation-delay: -6s;
+        }
+
+
+        .flower-3 {
+            left: 34%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 7s;
+            animation-delay: -4s;
+        }
+
+
+        .flower-4 {
+            left: 51%;
+            width: 44px;
+            height: 44px;
+            animation-duration: 9s;
+            animation-delay: -7s;
+        }
+
+
+        .flower-5 {
+            left: 66%;
+            width: 32px;
+            height: 32px;
+            animation-duration: 7.5s;
+            animation-delay: -1s;
+        }
+
+
+        .flower-6 {
+            left: 78%;
+            width: 47px;
+            height: 47px;
+            animation-duration: 11s;
+            animation-delay: -5s;
+        }
+
+
+        .flower-7 {
+            left: 89%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 8.5s;
+            animation-delay: -3s;
+        }
+
+
+        .flower-8 {
+            left: 42%;
+            width: 26px;
+            height: 26px;
+            animation-duration: 12s;
+            animation-delay: -9s;
+        }
+
+
+        @keyframes sunflowerFall {
+
+            0% {
+
+                transform:
+                    translateY(-80px)
+                    translateX(0)
+                    rotate(0deg);
+            }
+
+            25% {
+
+                transform:
+                    translateY(25vh)
+                    translateX(25px)
+                    rotate(90deg);
+            }
+
+            50% {
+
+                transform:
+                    translateY(50vh)
+                    translateX(-20px)
+                    rotate(180deg);
+            }
+
+            75% {
+
+                transform:
+                    translateY(75vh)
+                    translateX(25px)
+                    rotate(270deg);
+            }
+
+            100% {
+
+                transform:
+                    translateY(110vh)
+                    translateX(-10px)
+                    rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           ESCENA RECUERDOS
+        ===================================================== */
+
+        .memories-scene {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 30;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            background: #f3d77a;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform:
+                translateX(30px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+
+        .memories-scene.active {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+            transform:
+                translateX(0);
+        }
+
+
+        .memories-title {
+
+            position: absolute;
+
+            top: 55px;
+
+            left: 0;
+            right: 0;
+
+            margin: 0;
+
+            text-align: center;
+
+            color: #5f5139;
+
+            font-size:
+                clamp(30px, 7vw, 48px);
+
+            font-weight: 600;
+
+            z-index: 20;
+        }
+
+
+        /* =====================================================
+           CARRUSEL
+        ===================================================== */
+
+        .memory-carousel {
+
+            position: relative;
+
+            width:
+                min(850px, 100vw);
+
+            height: 480px;
+
+            perspective: 1400px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            z-index: 10;
+        }
+
+
+        .memory-track {
+
+            position: relative;
+
+            width: 100%;
+            height: 100%;
+
+            transform-style:
+                preserve-3d;
+        }
+
+
+        .memory-card {
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            width: 260px;
+            height: 360px;
+
+            transform-style:
+                preserve-3d;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            background: #fff;
+
+            border:
+                2px solid
+                rgba(255,255,255,.85);
+
+            box-shadow:
+                0 15px 35px
+                rgba(90,65,20,.25),
+
+                0 0 18px
+                rgba(255,215,70,.35);
+
+            transform-origin:
+                center center;
+
+            transition:
+                transform 1.5s
+                cubic-bezier(.65,0,.35,1),
+
+                opacity 1.2s ease,
+
+                filter 1.2s ease;
+
+            will-change:
+                transform;
+        }
+
+
+        .memory-card img {
+
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            user-select: none;
+
+            pointer-events: none;
+        }
+
+
+        .memory-card.position-center {
+
+            transform:
+                translate(-50%, -50%)
+                translateZ(120px)
+                rotateY(0deg)
+                scale(1);
+
+            z-index: 10;
+
+            opacity: 1;
+
+            filter:
+                brightness(1);
+        }
+
+
+        .memory-card.position-left {
+
+            transform:
+                translate(-50%, -50%)
+                translateX(-250px)
+                translateZ(-20px)
+                rotateY(55deg)
+                scale(.82);
+
+            z-index: 5;
+
+            opacity: .9;
+
+            filter:
+                brightness(.85);
+        }
+
+
+        .memory-card.position-right {
+
+            transform:
+                translate(-50%, -50%)
+                translateX(250px)
+                translateZ(-20px)
+                rotateY(-55deg)
+                scale(.82);
+
+            z-index: 5;
+
+            opacity: .9;
+
+            filter:
+                brightness(.85);
+        }
+
+
+        .memory-card.position-back {
+
+            transform:
+                translate(-50%, -50%)
+                translateZ(-180px)
+                rotateY(180deg)
+                scale(.7);
+
+            z-index: 1;
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .memory-card.position-center::after {
+
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            border-radius: 16px;
+
+            box-shadow:
+                inset 0 0 18px
+                rgba(255,215,70,.35),
+
+                0 0 20px
+                rgba(255,215,70,.25);
+        }
+
+
+        /* =====================================================
+           BOTÓN VOLVER
+        ===================================================== */
+
+        .back-button {
+
+            position: absolute;
+
+            left: 28px;
+            bottom: 28px;
+
+            z-index: 30;
+
+            padding:
+                13px 22px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background:
+                rgba(255,255,255,.75);
+
+            color: #5f5139;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 18px
+                rgba(100,80,40,.12);
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+
+        .back-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,.95);
+        }
+
+
+        /* =====================================================
+           ESCENA CARTA
+        ===================================================== */
+
+        .letter-scene {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 30;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            padding: 30px;
+
+            background: #f3d77a;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transform:
+                translateX(30px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+
+        .letter-scene.active {
+
+            opacity: 1;
+
+            pointer-events: auto;
+
+            transform:
+                translateX(0);
+        }
+
+
+        .letter-scene .falling-sunflowers {
+            z-index: 1;
+        }
+
+
+        /* =====================================================
+           SOBRE
+        ===================================================== */
+
+        .envelope-wrapper {
+
+            position: relative;
+
+            z-index: 10;
+
+            width:
+                min(680px, 88vw);
+
+            height: 560px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            perspective: 1200px;
+        }
+
+
+        .envelope {
+
+            position: relative;
+
+            width: 100%;
+
+            height: 300px;
+
+            transform-style:
+                preserve-3d;
+
+            filter:
+                drop-shadow(
+                    0 18px 25px
+                    rgba(100,70,20,.18)
+                );
+        }
+
+
+        /* =====================================================
+           CARTA
+        ===================================================== */
+
+        .letter-paper {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 35px;
+
+            width: 84%;
+
+            height: 430px;
+
+            padding:
+                34px 42px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fffef9,
+                    #faf0d9
+                );
+
+            border-radius: 7px;
+
+            border:
+                1px solid
+                rgba(120,95,50,.14);
+
+            box-shadow:
+                0 12px 30px
+                rgba(80,55,20,.18);
+
+            /*
+             * La carta comienza completamente
+             * escondida debajo del sobre.
+             */
+
+            transform:
+                translateX(-50%)
+                translateY(230px);
+
+            opacity: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+            /*
+             * Esto permite desplazar la carta
+             * cuando esté abierta.
+             */
+
+            overflow-y: auto;
+
+            overflow-x: hidden;
+
+            scrollbar-width: thin;
+
+            scrollbar-color:
+                rgba(95,81,57,.3)
+                transparent;
+
+            transition:
+                transform 1.5s
+                cubic-bezier(.65,0,.35,1),
+
+                opacity .35s ease .75s;
+        }
+
+
+        /* Barra de desplazamiento en Chrome/Safari */
+
+        .letter-paper::-webkit-scrollbar {
+
+            width: 6px;
+        }
+
+
+        .letter-paper::-webkit-scrollbar-track {
+
+            background: transparent;
+        }
+
+
+        .letter-paper::-webkit-scrollbar-thumb {
+
+            background:
+                rgba(95,81,57,.3);
+
+            border-radius: 10px;
+        }
+
+
+
+        .letter-paper::after {
+
+            content: "✦";
+
+            position: absolute;
+
+            top: 15px;
+
+            left: 50%;
+
+            transform:
+                translateX(-50%);
+
+            color:
+                rgba(217,173,77,.55);
+
+            font-size: 15px;
+        }
+
+
+        .letter-paper h2 {
+
+            position: relative;
+
+            margin:
+                10px 0 24px;
+
+            color: #5f5139;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(25px, 5vw, 32px);
+
+            font-weight: 600;
+
+            font-style: italic;
+
+            text-align: center;
+
+            z-index: 1;
+        }
+
+
+        .letter-paper p {
+
+            position: relative;
+
+            margin: 0;
+
+            color: #66563d;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 16px;
+
+            line-height: 1.75;
+
+            text-align: center;
+
+            z-index: 1;
+
+            padding-bottom: 25px;
+        }
+
+
+        .letter-paper strong {
+
+            color: #5a4b34;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           CUERPO DEL SOBRE
+        ===================================================== */
+
+        .envelope-body {
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 100%;
+
+            height: 78%;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #fffdf5,
+                    #f4ead0
+                );
+
+            border-radius:
+                8px 8px 22px 22px;
+
+            border:
+                1px solid
+                rgba(120,95,50,.12);
+
+            overflow: hidden;
+
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           LADOS DEL SOBRE
+        ===================================================== */
+
+        .envelope-left {
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 50%;
+
+            height: 78%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    transparent 49.5%,
+                    #e7d9b8 50%
+                );
+
+            z-index: 4;
+
+            pointer-events: none;
+        }
+
+
+        .envelope-right {
+
+            position: absolute;
+
+            right: 0;
+
+            bottom: 0;
+
+            width: 50%;
+
+            height: 78%;
+
+            background:
+                linear-gradient(
+                    225deg,
+                    transparent 49.5%,
+                    #e7d9b8 50%
+                );
+
+            z-index: 4;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           SOLAPA
+        ===================================================== */
+
+        .envelope-flap {
+
+            position: absolute;
+
+            left: 0;
+
+            top: 0;
+
+            width: 100%;
+
+            height: 180px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fffdf6,
+                    #efe2c3
+                );
+
+            clip-path:
+                polygon(
+                    0 0,
+                    50% 75%,
+                    100% 0
+                );
+
+            transform-origin:
+                50% 0%;
+
+            transform:
+                rotateX(0deg);
+
+            z-index: 5;
+
+            transition:
+                transform 1s
+                cubic-bezier(.65,0,.35,1);
+        }
+
+
+        /* =====================================================
+           SELLO
+        ===================================================== */
+
+        .envelope-seal {
+
+            position: absolute;
+
+            left: 50%;
+
+            top: 52%;
+
+            transform:
+                translate(-50%, -50%);
+
+            width: 58px;
+
+            height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                #d9ad4d;
+
+            color: #fff8e6;
+
+            font-size: 26px;
+
+            box-shadow:
+                0 6px 15px
+                rgba(100,70,20,.2);
+
+            z-index: 8;
+
+            transition:
+                opacity .35s ease,
+                transform .35s ease;
+        }
+
+
+        /* =====================================================
+           CARTA ABIERTA
+        ===================================================== */
+
+        .envelope-wrapper.open
+        .envelope-flap {
+
+            transform:
+                rotateX(180deg);
+        }
+
+
+        .envelope-wrapper.open
+        .letter-paper {
+
+            opacity: 1;
+
+            /*
+             * Sale hacia arriba.
+             */
+
+            transform:
+                translateX(-50%)
+                translateY(-35px);
+
+            z-index: 6;
+
+            /*
+             * AHORA SÍ se puede tocar,
+             * hacer scroll y deslizar.
+             */
+
+            pointer-events: auto;
+        }
+
+
+        .envelope-wrapper.open
+        .envelope-seal {
+
+            opacity: 0;
+
+            transform:
+                translate(-50%, -50%)
+                scale(.5);
+        }
+
+
+        /* =====================================================
+           BOTÓN ABRIR
+        ===================================================== */
+
+        .open-letter-button {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 55px;
+
+            transform:
+                translateX(-50%);
+
+            z-index: 20;
+
+            padding:
+                15px 28px;
+
+            border: none;
+
+            border-radius: 30px;
+
+            background:
+                rgba(255,255,255,.92);
+
+            color: #5f5139;
+
+            font-size: 17px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 20px
+                rgba(100,80,40,.15);
+
+            backdrop-filter: blur(8px);
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                opacity .4s ease;
+        }
+
+
+        .open-letter-button:hover {
+
+            transform:
+                translateX(-50%)
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,.98);
+        }
+
+
+        .envelope-wrapper.open
+        .open-letter-button {
+
+            opacity: 0;
+
+            pointer-events: none;
+        }
+
+
+        .letter-back {
+            z-index: 30;
+        }
+
+
+        /* =====================================================
+           MÓVIL
+        ===================================================== */
+
+        @media (max-width: 600px) {
+
+
+            /* ESCENA 1 */
+
+            .phone {
+
+                width: 92vw;
+
+                height: 92vh;
+
+                border-radius: 38px;
+            }
+
+
+            .lockscreen {
+
+                padding-top: 85px;
+            }
+
+
+            .number-pad {
+
+                bottom: 30px;
+            }
+
+
+            /* ESCENA 2 */
+
+            .love-counter {
+
+                margin-top: -105px;
+            }
+
+
+            .next-button {
+
+                right: 20px;
+
+                bottom: 20px;
+
+                width: 48px;
+                height: 48px;
+
+                font-size: 25px;
+            }
+
+
+            /* ESCENA 3 */
+
+            .scene-three {
+
+                padding: 20px;
+            }
+
+
+            .scene-three-title {
+
+                margin-bottom: 40px;
+            }
+
+
+            .scene-three-options {
+
+                width: 90vw;
+
+                gap: 18px;
+            }
+
+
+            .option-box {
+
+                min-height: 90px;
+            }
+
+
+            /* RECUERDOS */
+
+            .memory-carousel {
+
+                width: 100vw;
+
+                height: 430px;
+            }
+
+
+            .memory-card {
+
+                width: 205px;
+
+                height: 285px;
+            }
+
+
+            .memory-card.position-left {
+
+                transform:
+                    translate(-50%, -50%)
+                    translateX(-145px)
+                    translateZ(-20px)
+                    rotateY(55deg)
+                    scale(.78);
+            }
+
+
+            .memory-card.position-right {
+
+                transform:
+                    translate(-50%, -50%)
+                    translateX(145px)
+                    translateZ(-20px)
+                    rotateY(-55deg)
+                    scale(.78);
+            }
+
+
+            .back-button {
+
+                left: 20px;
+
+                bottom: 20px;
+            }
+
+
+            /* CARTA */
+
+            .letter-scene {
+
+                padding: 15px;
+            }
+
+
+            .envelope-wrapper {
+
+                width: 96vw;
+
+                height: 520px;
+            }
+
+
+            .envelope {
+
+                height: 235px;
+            }
+
+
+            .envelope-flap {
+
+                height: 145px;
+            }
+
+
+            .letter-paper {
+
+                width: 88%;
+
+                height: 390px;
+
+                padding:
+                    28px 25px;
+
+                bottom: 20px;
+
+                transform:
+                    translateX(-50%)
+                    translateY(200px);
+
+                opacity: 0;
+            }
+
+
+            .envelope-wrapper.open
+            .letter-paper {
+
+                transform:
+                    translateX(-50%)
+                    translateY(-25px);
+
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+
+            .letter-paper h2 {
+
+                font-size: 25px;
+            }
+
+
+            .letter-paper p {
+
+                font-size: 15px;
+
+                line-height: 1.65;
+            }
+
+
+            .envelope-seal {
+
+                width: 48px;
+
+                height: 48px;
+
+                font-size: 22px;
+            }
+
+
+            .open-letter-button {
+
+                bottom: 20px;
+
+                padding:
+                    12px 23px;
+
+                font-size: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         ESCENA 1
+    ====================================================== -->
+
+    <section class="scene-one">
+
+        <div class="phone">
+
+            <div class="lockscreen">
+
+                <div
+                    class="lock-date"
+                    id="lockDate"
+                >
+                    --
+                </div>
+
+                <div
+                    class="lock-time"
+                    id="lockTime"
+                >
+                    --
+                </div>
+
+                <div class="code-text">
+                    Introduce el código
+                </div>
+
+                <div class="code-dots">
+
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+                    <span class="code-dot"></span>
+
+                </div>
+
+                <div
+                    class="code-error"
+                    id="codeError"
+                >
+                    Código incorrecto
+                </div>
+
+
+                <div class="number-pad">
+
+                    <button
+                        class="number-button"
+                        data-number="1"
+                    >
+                        1
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="2"
+                    >
+                        2
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="3"
+                    >
+                        3
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="4"
+                    >
+                        4
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="5"
+                    >
+                        5
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="6"
+                    >
+                        6
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="7"
+                    >
+                        7
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="8"
+                    >
+                        8
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="9"
+                    >
+                        9
+                    </button>
+
+                    <button
+                        class="number-button empty"
+                    >
+                    </button>
+
+                    <button
+                        class="number-button"
+                        data-number="0"
+                    >
+                        0
+                    </button>
+
+                    <button
+                        class="number-button empty"
+                    >
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ESCENA 2
+    ====================================================== -->
+
+    <section class="scene-two">
+
+        <div class="sunflower-split">
+
+            <div class="sun-half sun-left">
+
+                <img
+                    src="images/girasol.png"
+                    alt=""
+                >
+
+            </div>
+
+
+            <div class="sun-half sun-right">
+
+                <img
+                    src="images/girasol.png"
+                    alt=""
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="love-counter">
+
+            <div class="counter-box">
+
+                <span
+                    class="counter-number"
+                    id="daysTogether"
+                >
+                    0
+                </span>
+
+                <span class="counter-label">
+                    días juntas
+                </span>
+
+                <span class="counter-date">
+                    desde el 23 de octubre de 2022
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="next-button"
+            id="goToScene3"
+            aria-label="Continuar"
+        >
+            →
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         ESCENA 3
+    ====================================================== -->
+
+    <section class="scene-three">
+
+        <div
+            class="falling-sunflowers"
+            aria-hidden="true"
+        >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-1"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-2"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-3"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-4"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-5"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-6"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-7"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-8"
+                alt=""
+            >
+
+        </div>
+
+
+        <h1 class="scene-three-title">
+            ¿Qué quieres ver?
+        </h1>
+
+
+        <div class="scene-three-options">
+
+            <button
+                class="option-box"
+                id="memoriesButton"
+            >
+                Ver recuerdos
+            </button>
+
+
+            <button
+                class="option-box"
+                id="letterButton"
+            >
+                Ver carta
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ESCENA 4 — RECUERDOS
+    ====================================================== -->
+
+    <section
+        class="memories-scene"
+        id="memoriesScene"
+    >
+
+        <div
+            class="falling-sunflowers"
+            aria-hidden="true"
+        >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-1"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-2"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-3"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-4"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-5"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-6"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-7"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-8"
+                alt=""
+            >
+
+        </div>
+
+
+        <h1 class="memories-title">
+            Nuestros recuerdos
+        </h1>
+
+
+        <div class="memory-carousel">
+
+            <div
+                class="memory-track"
+                id="memoryTrack"
+            >
+
+                <div
+                    class="memory-card position-center"
+                    data-index="0"
+                >
+
+                    <img
+                        src="images/recuerdo1.jpg"
+                        alt=""
+                    >
+
+                </div>
+
+
+                <div
+                    class="memory-card position-right"
+                    data-index="1"
+                >
+
+                    <img
+                        src="images/recuerdo2.jpg"
+                        alt=""
+                    >
+
+                </div>
+
+
+                <div
+                    class="memory-card position-back"
+                    data-index="2"
+                >
+
+                    <img
+                        src="images/recuerdo3.jpg"
+                        alt=""
+                    >
+
+                </div>
+
+
+                <div
+                    class="memory-card position-left"
+                    data-index="3"
+                >
+
+                    <img
+                        src="images/recuerdo4.jpg"
+                        alt=""
+                    >
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="back-button"
+            id="backFromMemories"
+        >
+            ← Volver
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         ESCENA 5 — CARTA
+    ====================================================== -->
+
+    <section
+        class="letter-scene"
+        id="letterScene"
+    >
+
+
+        <div
+            class="falling-sunflowers"
+            aria-hidden="true"
+        >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-1"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-2"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-3"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-4"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-5"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-6"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-7"
+                alt=""
+            >
+
+            <img
+                src="images/girasol.png"
+                class="falling-sunflower flower-8"
+                alt=""
+            >
+
+        </div>
+
+
+        <div
+            class="envelope-wrapper"
+            id="envelopeWrapper"
+        >
+
+
+            <div class="envelope">
+
+
+                <!-- =================================================
+                     CARTA
+                ================================================== -->
+
+                <div class="letter-paper">
+
+                    <h2>
+Per a tu ❤️
+                    </h2>
+
+
+                    <p>
+
+                       No sé si existeixen paraules suficients
+per a explicar tot el que sent per tu,
+però hui vull intentar-ho.
+                        <br><br>
+
+                        Desde aquell
+                        <strong>23 de octubre de 2022</strong>,
+                        han passat moltíssimes coses.
+Hem rigut, hem aprés,
+hem viscut moments increïbles
+i també hem superat dies difícils.
+
+                        <br><br>
+
+                        I si hi ha alguna cosa que tinc clar després
+de tot aquest temps, és que
+                        <strong>
+tornaria a triar-te una i mil vegades.
+                        </strong>
+
+                        <br><br>
+
+                        Gràcies per estar al meu costat,
+per fer-me riure,
+per cuidar-me,
+per escoltar-me
+i per convertir els dies normals
+en records que vull guardar per sempre.
+                        <br><br>
+
+                       M'encanta pensar en tot el que
+hem viscut juntes i, encara més,
+en tot el que ens queda per viure.
+                        <br><br>
+
+                        Vull continuar compartint amb tu
+viatges, plans improvisats,
+nits interminables,
+riures absurds,
+abraçades que curen qualsevol dia dolent
+i tots eixos xicotets moments
+que fan que estar amb tu
+siga el meu lloc favorit.
+                        <br><br>
+
+                        No sé què ens oferiran els pròxims anys,
+però sí que sé una cosa:
+
+                        <br><br>
+
+                        <strong>
+vull descobrir-los amb tu.
+                        </strong>
+
+                        <br><br>
+
+                       Perquè després de tot aquest temps,
+continues sent eixa persona
+amb la qual vull compartir
+els meus dies, els meus somnis
+i la meua vida.
+
+                        <br><br>
+
+                      Gràcies per aquests anys,
+per tot el que som
+i per tot el que encara ens queda.
+                        <br><br>
+
+                        <strong>
+Et vull moltíssim. ❤️
+                        </strong>
+
+                        <br><br>
+
+                        I tornaria a triar-te,
+hui, demà
+i totes les vegades que fera falta.
+                  
+  </p>
+
+                </div>
+
+
+                <!-- CUERPO DEL SOBRE -->
+
+                <div class="envelope-body"></div>
+
+
+                <!-- LADOS -->
+
+                <div class="envelope-left"></div>
+
+                <div class="envelope-right"></div>
+
+
+                <!-- SOLAPA -->
+
+                <div class="envelope-flap"></div>
+
+
+                <!-- SELLO -->
+
+                <div class="envelope-seal">
+                    ♥
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="open-letter-button"
+                id="openLetterButton"
+            >
+                Abrir carta
+            </button>
+
+
+        </div>
+
+
+        <button
+            class="back-button letter-back"
+            id="backFromLetter"
+        >
+            ← Volver
+        </button>
+
+
+    </section>
+
+
+    <script>
+
+
+        /* =====================================================
+           FECHA Y HORA
+        ===================================================== */
+
+        function actualizarFechaHora() {
+
+            const ahora = new Date();
+
+            const opcionesFecha = {
+
+                weekday: "long",
+
+                day: "numeric",
+
+                month: "long"
+
+            };
+
+
+            let fecha =
+                ahora.toLocaleDateString(
+                    "es-ES",
+                    opcionesFecha
+                );
+
+
+            fecha =
+                fecha.charAt(0).toUpperCase()
+                +
+                fecha.slice(1);
+
+
+            const hora =
+                ahora.toLocaleTimeString(
+                    "es-ES",
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+
+
+            document.getElementById(
+                "lockDate"
+            ).textContent = fecha;
+
+
+            document.getElementById(
+                "lockTime"
+            ).textContent = hora;
+        }
+
+
+        actualizarFechaHora();
+
+        setInterval(
+            actualizarFechaHora,
+            1000
+        );
+
+
+        /* =====================================================
+           CÓDIGO
+        ===================================================== */
+
+        const codigoCorrecto =
+            "231022";
+
+        let codigoIntroducido = "";
+
+
+        const dots =
+            document.querySelectorAll(
+                ".code-dot"
+            );
+
+
+        const codeError =
+            document.getElementById(
+                "codeError"
+            );
+
+
+        document
+            .querySelectorAll(
+                ".number-button[data-number]"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        if (
+                            codigoIntroducido.length >= 6
+                        ) {
+                            return;
+                        }
+
+
+                        codigoIntroducido +=
+                            button.dataset.number;
+
+
+                        actualizarDots();
+
+
+                        if (
+                            codigoIntroducido.length === 6
+                        ) {
+
+                            comprobarCodigo();
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        function actualizarDots() {
+
+            dots.forEach(
+                (dot, index) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        index <
+                        codigoIntroducido.length
+                    );
+
+                }
+            );
+        }
+
+
+        function comprobarCodigo() {
+
+            if (
+                codigoIntroducido ===
+                codigoCorrecto
+            ) {
+
+                document.body.classList.add(
+                    "unlocked"
+                );
+
+                iniciarGirasol();
+
+            }
+
+            else {
+
+                codeError.classList.add(
+                    "show"
+                );
+
+
+                document
+                    .querySelector(".phone")
+                    .animate(
+                        [
+                            {
+                                transform:
+                                    "translateX(0)"
+                            },
+                            {
+                                transform:
+                                    "translateX(-8px)"
+                            },
+                            {
+                                transform:
+                                    "translateX(8px)"
+                            },
+                            {
+                                transform:
+                                    "translateX(-6px)"
+                            },
+                            {
+                                transform:
+                                    "translateX(6px)"
+                            },
+                            {
+                                transform:
+                                    "translateX(0)"
+                            }
+                        ],
+                        {
+                            duration: 400
+                        }
+                    );
+
+
+                setTimeout(
+                    () => {
+
+                        codigoIntroducido =
+                            "";
+
+                        actualizarDots();
+
+                        codeError.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    900
+                );
+
+            }
+        }
+
+
+        /* =====================================================
+           GIRASOL
+        ===================================================== */
+
+        function iniciarGirasol() {
+
+            document
+                .querySelector(".sun-left")
+                .style.transform =
+                "translateX(0)";
+
+
+            document
+                .querySelector(".sun-right")
+                .style.transform =
+                "translateX(0)";
+        }
+
+
+        /* =====================================================
+           CONTADOR
+        ===================================================== */
+
+        function actualizarContador() {
+
+            const fechaInicio =
+                new Date(
+                    2022,
+                    9,
+                    23
+                );
+
+
+            const ahora =
+                new Date();
+
+
+            const diferencia =
+                ahora -
+                fechaInicio;
+
+
+            const dias =
+                Math.floor(
+                    diferencia /
+                    (
+                        1000 *
+                        60 *
+                        60 *
+                        24
+                    )
+                );
+
+
+            document.getElementById(
+                "daysTogether"
+            ).textContent =
+                dias.toLocaleString(
+                    "es-ES"
+                );
+        }
+
+
+        actualizarContador();
+
+
+        setInterval(
+            actualizarContador,
+            60 * 60 * 1000
+        );
+
+
+        /* =====================================================
+           ESCENA 3
+        ===================================================== */
+
+        document
+            .getElementById("goToScene3")
+            .addEventListener(
+                "click",
+                () => {
+
+                    document.body.classList.add(
+                        "scene-three-active"
+                    );
+
+                }
+            );
+
+
+        /* =====================================================
+           RECUERDOS
+        ===================================================== */
+
+        const memoriesButton =
+            document.getElementById(
+                "memoriesButton"
+            );
+
+
+        const memoriesScene =
+            document.getElementById(
+                "memoriesScene"
+            );
+
+
+        const memoryCards =
+            document.querySelectorAll(
+                ".memory-card"
+            );
+
+
+        let currentMemory = 0;
+
+        let carouselTimer = null;
+
+
+        function actualizarCarrusel() {
+
+            memoryCards.forEach(
+                (card, index) => {
+
+                    let difference =
+                        index -
+                        currentMemory;
+
+
+                    if (
+                        difference > 2
+                    ) {
+
+                        difference -= 4;
+
+                    }
+
+
+                    if (
+                        difference < -2
+                    ) {
+
+                        difference += 4;
+
+                    }
+
+
+                    card.classList.remove(
+
+                        "position-center",
+
+                        "position-left",
+
+                        "position-right",
+
+                        "position-back"
+
+                    );
+
+
+                    if (
+                        difference === 0
+                    ) {
+
+                        card.classList.add(
+                            "position-center"
+                        );
+
+                    }
+
+                    else if (
+                        difference === -1
+                    ) {
+
+                        card.classList.add(
+                            "position-left"
+                        );
+
+                    }
+
+                    else if (
+                        difference === 1
+                    ) {
+
+                        card.classList.add(
+                            "position-right"
+                        );
+
+                    }
+
+                    else {
+
+                        card.classList.add(
+                            "position-back"
+                        );
+
+                    }
+
+                }
+            );
+        }
+
+
+        function siguienteRecuerdo() {
+
+            currentMemory++;
+
+
+            if (
+                currentMemory >= 4
+            ) {
+
+                currentMemory = 0;
+
+            }
+
+
+            actualizarCarrusel();
+        }
+
+
+        function iniciarCarrusel() {
+
+            detenerCarrusel();
+
+            actualizarCarrusel();
+
+
+            carouselTimer =
+                setInterval(
+                    siguienteRecuerdo,
+                    3500
+                );
+        }
+
+
+        function detenerCarrusel() {
+
+            if (
+                carouselTimer !== null
+            ) {
+
+                clearInterval(
+                    carouselTimer
+                );
+
+                carouselTimer = null;
+            }
+        }
+
+
+        memoriesButton.addEventListener(
+            "click",
+            () => {
+
+                memoriesScene.classList.add(
+                    "active"
+                );
+
+                iniciarCarrusel();
+
+            }
+        );
+
+
+        document
+            .getElementById(
+                "backFromMemories"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    memoriesScene.classList.remove(
+                        "active"
+                    );
+
+                    detenerCarrusel();
+
+                }
+            );
+
+
+        /* =====================================================
+           CARTA
+        ===================================================== */
+
+        const letterButton =
+            document.getElementById(
+                "letterButton"
+            );
+
+
+        const letterScene =
+            document.getElementById(
+                "letterScene"
+            );
+
+
+        const envelopeWrapper =
+            document.getElementById(
+                "envelopeWrapper"
+            );
+
+
+        const openLetterButton =
+            document.getElementById(
+                "openLetterButton"
+            );
+
+
+        /*
+         * ENTRAR EN LA ESCENA DE LA CARTA
+         */
+
+        letterButton.addEventListener(
+            "click",
+            () => {
+
+                letterScene.classList.add(
+                    "active"
+                );
+
+                envelopeWrapper.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /*
+         * ABRIR SOBRE
+         */
+
+        openLetterButton.addEventListener(
+            "click",
+            () => {
+
+                envelopeWrapper.classList.add(
+                    "open"
+                );
+
+            }
+        );
+
+
+        /*
+         * VOLVER
+         */
+
+        document
+            .getElementById(
+                "backFromLetter"
+            )
+            .addEventListener(
+                "click",
+                () => {
+
+                    letterScene.classList.remove(
+                        "active"
+                    );
+
+                    envelopeWrapper.classList.remove(
+                        "open"
+                    );
+
+                }
+            );
+
+
+    </script>
+
+</body>
+
+</html>
